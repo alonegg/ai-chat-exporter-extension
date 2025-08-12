@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat Exporter - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AI Chat Exporter Settings</h1>
+      <p>Configure your GitHub integration to enable automatic exports</p>
+    </header>
+
+    <main>
+      <section class="settings-section">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
+          GitHub Configuration
+        </h2>
+        
+        <div class="form-group">
+          <label for="githubToken">
+            Personal Access Token
+            <a href="https://github.com/settings/tokens/new" target="_blank" class="help-link">Generate token</a>
+          </label>
+          <div class="input-wrapper">
+            <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <button type="button" class="toggle-visibility" data-target="githubToken">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <small class="help-text">Required permissions: repo (for private repos) or public_repo (for public repos)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="githubOwner">GitHub Username or Organization</label>
+          <input type="text" id="githubOwner" placeholder="your-username">
+          <small class="help-text">The owner of the repository</small>
+        </div>
+
+        <div class="form-group">
+          <label for="githubRepo">Repository Name</label>
+          <input type="text" id="githubRepo" placeholder="ai-conversations">
+          <small class="help-text">The repository where conversations will be saved</small>
+        </div>
+
+        <div class="form-group">
+          <label for="githubBranch">Branch (Optional)</label>
+          <input type="text" id="githubBranch" placeholder="main">
+          <small class="help-text">Default: main</small>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Export Settings
+        </h2>
+
+        <div class="form-group">
+          <label for="defaultPath">Default Repository Path</label>
+          <input type="text" id="defaultPath" placeholder="conversations/">
+          <small class="help-text">Folder path in the repository where files will be saved</small>
+        </div>
+
+        <div class="form-group">
+          <label>Default Export Formats</label>
+          <div class="checkbox-group">
+            <label class="checkbox">
+              <input type="checkbox" id="defaultMarkdown" checked>
+              <span>Markdown (.md)</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="defaultHTML" checked>
+              <span>HTML (.html)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fileNaming">File Naming Pattern</label>
+          <select id="fileNaming">
+            <option value="auto">Automatic (platform-timestamp-summary)</option>
+            <option value="timestamp">Timestamp only</option>
+            <option value="sequential">Sequential numbering</option>
+            <option value="custom">Custom prefix</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="customPrefixGroup" style="display: none;">
+          <label for="customPrefix">Custom Prefix</label>
+          <input type="text" id="customPrefix" placeholder="my-chat">
+          <small class="help-text">Files will be named: prefix-timestamp.ext</small>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Auto-Export Settings
+        </h2>
+
+        <div class="form-group">
+          <label class="checkbox">
+            <input type="checkbox" id="autoExport">
+            <span>Enable auto-export on conversation end</span>
+          </label>
+          <small class="help-text">Automatically export when you close a conversation tab</small>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox">
+            <input type="checkbox" id="confirmBeforeExport">
+            <span>Confirm before auto-export</span>
+          </label>
+        </div>
+      </section>
+
+      <div class="button-group">
+        <button id="testConnection" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Test Connection
+        </button>
+        <button id="saveSettings" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save Settings
+        </button>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+    </main>
+
+    <footer>
+      <p>Tips:</p>
+      <ul>
+        <li>Create a dedicated repository for your AI conversations</li>
+        <li>Use a personal access token with minimal required permissions</li>
+        <li>Organize conversations in folders by date or topic</li>
+      </ul>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

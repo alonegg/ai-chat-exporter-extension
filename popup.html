@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat Exporter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AI Chat Exporter</h1>
+      <button id="settingsBtn" class="icon-btn" title="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 1v6m0 6v6m4.22-13.22l4.24 4.24M1.54 20.46l4.24-4.24M20.46 1.54l-4.24 4.24M7.78 17.78l-4.24 4.24"></path>
+        </svg>
+      </button>
+    </header>
+
+    <div class="status-section">
+      <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <div class="export-section">
+      <h2>Export Options</h2>
+      
+      <div class="form-group">
+        <label for="fileName">File Name</label>
+        <input type="text" id="fileName" placeholder="Auto-generated if empty">
+      </div>
+
+      <div class="form-group">
+        <label>Export Format</label>
+        <div class="checkbox-group">
+          <label class="checkbox">
+            <input type="checkbox" id="exportMarkdown" checked>
+            <span>Markdown (.md)</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" id="exportHTML" checked>
+            <span>HTML (.html)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="repoPath">Repository Path</label>
+        <input type="text" id="repoPath" placeholder="e.g., conversations/">
+      </div>
+
+      <button id="extractBtn" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Extract Conversation
+      </button>
+
+      <button id="exportBtn" class="btn btn-success" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Export to GitHub
+      </button>
+    </div>
+
+    <div class="preview-section" id="previewSection" style="display: none;">
+      <h3>Preview</h3>
+      <div class="preview-tabs">
+        <button class="tab-btn active" data-tab="markdown">Markdown</button>
+        <button class="tab-btn" data-tab="html">HTML</button>
+      </div>
+      <div class="preview-content">
+        <pre id="markdownPreview" class="preview-pane active"></pre>
+        <div id="htmlPreview" class="preview-pane"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Not configured? <a href="#" id="configureLink">Set up GitHub access</a></p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
