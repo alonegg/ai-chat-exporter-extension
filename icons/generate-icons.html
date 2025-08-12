@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Extension Icons</title>
+</head>
+<body>
+  <h1>Icon Generator</h1>
+  <p>Open this file in a browser and right-click each canvas to save as PNG</p>
+  
+  <div>
+    <h2>16x16</h2>
+    <canvas id="icon16" width="16" height="16"></canvas>
+  </div>
+  
+  <div>
+    <h2>48x48</h2>
+    <canvas id="icon48" width="48" height="48"></canvas>
+  </div>
+  
+  <div>
+    <h2>128x128</h2>
+    <canvas id="icon128" width="128" height="128"></canvas>
+  </div>
+
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      const scale = size / 128;
+      
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // Draw rounded rectangle background
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.roundRect(0, 0, size, size, size * 0.1875);
+      ctx.fill();
+      
+      // Draw chat bubble (simplified for small sizes)
+      ctx.save();
+      ctx.translate(size/2, size/2);
+      ctx.scale(scale, scale);
+      
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.beginPath();
+      ctx.moveTo(-30, -10);
+      ctx.quadraticCurveTo(-30, -30, -10, -30);
+      ctx.lineTo(20, -30);
+      ctx.quadraticCurveTo(30, -30, 30, -20);
+      ctx.lineTo(30, 10);
+      ctx.quadraticCurveTo(30, 20, 20, 20);
+      ctx.lineTo(-10, 20);
+      ctx.lineTo(-20, 30);
+      ctx.lineTo(-20, 20);
+      ctx.quadraticCurveTo(-30, 20, -30, 10);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Draw export arrow
+      ctx.strokeStyle = '#667eea';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      
+      // Arrow line
+      ctx.beginPath();
+      ctx.moveTo(0, 10);
+      ctx.lineTo(0, -15);
+      ctx.stroke();
+      
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(-8, -7);
+      ctx.lineTo(0, -15);
+      ctx.lineTo(8, -7);
+      ctx.stroke();
+      
+      // Document lines (only for larger icons)
+      if (size >= 48) {
+        ctx.strokeStyle = 'rgba(102, 126, 234, 0.6)';
+        ctx.lineWidth = 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(-15, -10);
+        ctx.lineTo(15, -10);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(-15, -2);
+        ctx.lineTo(10, -2);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(-15, 6);
+        ctx.lineTo(12, 6);
+        ctx.stroke();
+      }
+      
+      ctx.restore();
+    }
+    
+    // Draw all icons
+    drawIcon(document.getElementById('icon16'), 16);
+    drawIcon(document.getElementById('icon48'), 48);
+    drawIcon(document.getElementById('icon128'), 128);
+    
+    // Auto-download function (optional)
+    function downloadCanvas(canvas, filename) {
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+    
+    // Add download buttons
+    document.querySelectorAll('canvas').forEach(canvas => {
+      const button = document.createElement('button');
+      button.textContent = `Download ${canvas.id}.png`;
+      button.onclick = () => downloadCanvas(canvas, `${canvas.id}.png`);
+      canvas.parentElement.appendChild(document.createElement('br'));
+      canvas.parentElement.appendChild(button);
+    });
+  </script>
+</body>
+</html>
